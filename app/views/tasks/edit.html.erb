@@ -1,0 +1,33 @@
+<h2>Edit Task</h2>
+
+<div class="elementform">
+  <% form_for :task, :url => {:action => :update}, :html => {:method => :put} do |f| %>
+
+    <div class="projectform">
+      <div class="projectformname">Name:</div>
+
+      <div class="projectformfieldname">
+        <%= f.text_field :name %>
+      </div>
+
+
+
+      <div class="projectformfieldname2">
+        <p><%= f.submit "Ok" %></p>
+      </div>
+
+    </div>
+
+    <div class="projectform2" >
+      <div class="projectformname2">Status:</div>
+
+      <div class="projectformfieldname3">
+      <%= f.select :status, Task::STATES %>
+    </div>
+    </div>
+    <%= f.error_messages %>
+    </div>
+
+  <% end %>
+
+</div>
