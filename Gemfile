@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.4.7'
 gem 'rails', '2.3.16'
 
 # bundler requires these gems in all environments
