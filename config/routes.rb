@@ -1,13 +1,7 @@
-ActionController::Routing::Routes.draw do |map|
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :projects
+  resources :tasks
 
-
-  map.connect '', :controller => :projects,
-              :action => :index
-
-
-  map.resources :projects
-  map.resources :tasks
-
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  root to: 'projects#index'
 end

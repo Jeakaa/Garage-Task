@@ -1,54 +1,39 @@
 class TasksController < ApplicationController
-
   def new
     @task = Task.new
   end
 
   def create
-    @task = Task.new(:status => 0)
-    @task.attributes = params[:task]
-    @task.save!
-    redirect_to :controller => :projects, :action => :index
-  rescue ActiveRecord::RecordInvalid
-    redirect_to :controller => :projects, :action => :index
+    Task.create({ status: 0 }.merge(task_params))
+    redirect_to controller: :projects, action: :index
   end
-
-
-
 
   def edit
     @task = Task.find_by_id!(params[:id])
-
-  rescue ActiveRecord::RecordNotFound
-    render :action => :index
   end
 
   def update
     @task = Task.find_by_id!(params[:id])
-    @task.attributes = params[:task]
-    @task.save!
 
-    redirect_to :controller => :projects, :action => :index
-
-  rescue ActiveRecord::RecordNotFound
-    render :controller => :projects, :action => :index
-
-  rescue ActiveRecord::RecordInvalid
-    render :action => :edit
+    if @task.update(task_params)
+      redirect_to controller: :projects, action: :index
+    else
+      render :edit
+    end
   end
-
-
-
 
   def destroy
     @task = Task.find_by_id!(params[:id])
     @task.destroy
 
-    redirect_to :controller => :projects, :action => :index
-
+    redirect_to controller: :projects, action: :index
   rescue ActiveRecord::RecordNotFound
-    redirect_to :controller => :projects, :action => :index
+    redirect_to controller: :projects, action: :index
   end
 
+  private
 
+  def task_params
+    params.require(:task).permit(:name, :project_id, :status)
+  end
 end

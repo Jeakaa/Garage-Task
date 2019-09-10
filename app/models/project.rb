@@ -1,8 +1,13 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
+  has_many :tasks, dependent: :delete_all
 
-  has_many :tasks, :dependent => :delete_all
+  validates :name, presence: true, uniqueness: true
 
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  before_validation :strip_name
 
+  private
+
+  def strip_name
+    self.name = name.strip
+  end
 end

@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-
   def index
     @projects = Project.all
   end
@@ -9,20 +8,19 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new
-    @project.attributes = params[:project]
-    @project.name = @project.name.strip
-    @project.save!
-    redirect_to :action => :index
-  rescue ActiveRecord::RecordInvalid
-    render :action => :new
+    @project = Project.new(project_params)
+    
+    if @project.save
+      redirect_to action: :index
+    else
+      render :new
+    end
   end
 
   def edit
     @project = Project.find_by_id!(params[:id])
-
   rescue ActiveRecord::RecordNotFound
-    render :action => :index
+    render :index
   end
 
   def update
@@ -30,26 +28,25 @@ class ProjectsController < ApplicationController
     @project.attributes = params[:project]
     @project.save!
 
-    redirect_to :action => :index
-
+    redirect_to action: :index
   rescue ActiveRecord::RecordNotFound
-    render :action => :index
-
+    render :index
   rescue ActiveRecord::RecordInvalid
-    render :action => :edit
+    render :edit
   end
 
   def destroy
     @project = Project.find_by_id!(params[:id])
     @project.destroy
 
-    redirect_to :action => :index
-
+    redirect_to action: :index
   rescue ActiveRecord::RecordNotFound
-    render :action => :index
-
+    render action: :index
   end
 
+  private
 
-
+  def project_params
+    params.require(:project).permit(:name)
+  end
 end

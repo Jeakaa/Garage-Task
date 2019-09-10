@@ -1,23 +1,15 @@
 <!DOCTYPE html>
+<html>
+  <head>
+    <title>Garage</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<html lang="en">
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
 
-<head>
-  <meta http-equiv = "Content-Type" content = "text/html; charset = iso-8859-1" />
-  <meta http-equiv = "Content-Language" content = "en-us" />
-  <link rel='shortcut icon' href='/images/favicon.ico' type="image/ico" />
-  <title>GARAGE</title>
-
-
-
-</head>
-
-<body>
-
-<%= yield -%>
-
-<%= stylesheet_link_tag "/style" %>
-
-</body>
-
+  <body>
+    <%= yield %>
+  </body>
 </html>

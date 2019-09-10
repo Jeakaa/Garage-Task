@@ -2,66 +2,71 @@
 <h2> FROM RUBY GARAGE</h2>
 
 <% @projects.each do |f| %>
-<div class="element">
-  <div class="headborder">
-    <div class="headline">
-      <div class="headlinelefticon">
-        <img src="../images/calendar.png" class="iconcalendar" >
-      </div>
-      <div class="headlineleft">
-        <%= f.name  %>
-      </div>
-      <div class="headlineright">
-        <%= link_to image_tag( "pen.png", :class => "iconedit" ), edit_project_path(f.id) %>
-      </div>
-      <div class="headlineright">
-        <%= link_to image_tag( "bucket.png" , :class => "icondelete" ), project_path(f.id), :method => :delete %>
-      </div>
-    </div>
-  </div>
-  <div class="headbodyborder">
-    <div class="headtaskcreate">
-      <div class="headtaskcreateicon">
-      <img src="../images/cross.png" class="iconcross" >
-      </div>
-      <div class="headtaskcreateiconleft">
-      <% form_for(:task, :url => {:controller => :tasks, :action => :create}) do |ff| %>
-      <%= ff.error_messages %>
-      <%= ff.text_field :name, :placeholder => "Start typing here to create a task..." %>
-      <%= ff.hidden_field :project_id, :value => f.id %>
-      </div>
-      <div class="headtaskcreateiconleft">
-      <%= ff.submit "Create" %>
-      <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="headbodyborder">
-    <div class="headtasklist">
-        <% Task.find_all_by_project_id(f.id).each do |fff| %>
-        <div class="freefield"></div>
-        <div class="headtask">
-          <div class="headlineleftdone"><%= Task.task_state(fff.status) %></div>
-          <div class="headlineleft">
-          <%= fff.name %>
-            </div>
-          <div class="headlineright2">
-            <%= link_to image_tag( "pen.png", :class => "iconedittask" ), edit_task_path(fff.id) %>
-          </div>
-          <div class="headlineright2">
-            <%= link_to image_tag( "bucket.png" , :class => "icondeletetask" ), task_path(fff.id), :method => :delete %>
-          </div>
+  <div class="element">
+    <div class="headborder">
+      <div class="headline">
+        <div class="headlinelefticon">
+          <%= image_tag 'calendar.png', class: 'iconcalendar' %>
         </div>
-      <% end %>
+        <div class="headlineleft">
+          <%= f.name  %>
+        </div>
+        <div class="headlineright">
+          <%= link_to image_tag( "pen.png", :class => "iconedit" ), edit_project_path(f.id) %>
+        </div>
+        <div class="headlineright">
+          <%= link_to image_tag( "bucket.png" , :class => "icondelete" ), project_path(f.id), :method => :delete %>
+        </div>
+      </div>
     </div>
+    <div class="headbodyborder">
+      <div class="headtaskcreate">
+        <div class="headtaskcreateicon">
+          <%= image_tag 'cross.png', class: 'iconcross' %>
+        </div>
+        <div class="headtaskcreateiconleft">
+        <%= form_for(:task, :url => {:controller => :tasks, :action => :create}) do |ff| %>
+          <% if f.errors.any? %>
+          <ul>
+            <% f.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+          <% end %>
+          <%= ff.text_field :name, :placeholder => "Start typing here to create a task..." %>
+          <%= ff.hidden_field :project_id, :value => f.id %>
+          </div>
+          <div class="headtaskcreateiconleft">
+          <%= ff.submit "Create" %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="headbodyborder">
+      <div class="headtasklist">
+          <% f.tasks.each do |fff| %>
+            <div class="freefield"></div>
+            <div class="headtask">
+              <div class="headlineleftdone"><%= Task.task_state(fff.status) %></div>
+              <div class="headlineleft">
+              <%= fff.name %>
+                </div>
+              <div class="headlineright2">
+                <%= link_to image_tag( "pen.png", :class => "iconedittask" ), edit_task_path(fff.id) %>
+              </div>
+              <div class="headlineright2">
+                <%= link_to image_tag( "bucket.png" , :class => "icondeletetask" ), task_path(fff.id), :method => :delete %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+      <div class="headdownborder"></div>
   </div>
-    <div class="headdownborder"></div>
-</div>
 <% end %>
 
 <div class="addproject">
-    <% link_to new_project_path do %>
-  <div class="iconaddproject">add TODO list.</div>
+  <%= link_to new_project_path do %>
+    <div class="iconaddproject">add TODO list.</div>
   <% end %>
 </div>
-

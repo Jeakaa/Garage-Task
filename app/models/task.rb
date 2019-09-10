@@ -1,29 +1,23 @@
-class Task < ActiveRecord::Base
+class Task < ApplicationRecord
+  ON = 1
+  OFF = 0
+
+  STATES = [
+    ['Not Done', OFF],
+    ['Done', ON]
+  ]
 
   belongs_to :project
 
-  validates_presence_of :name
-  validates_presence_of :project_id
-  validates_presence_of :status
-
-
-
-
-
-  OFF = 0
-  ON = 1
-
-  STATES = [
-      ["Not Done", OFF],
-      ["Done", ON],
-  ]
+  validates :name, presence: true
+  validates :project_id, presence: true
+  validates :status, presence: true
 
   def self.task_state(s)
     result = 'not set!!!'
     if s.blank? or (!s.is_a?(Integer) and !s.is_a?(Fixnum))
       return result
     end
-
 
     STATES.each do |i|
       if i[1] == s
@@ -33,5 +27,4 @@ class Task < ActiveRecord::Base
 
     return result
   end
-
 end
