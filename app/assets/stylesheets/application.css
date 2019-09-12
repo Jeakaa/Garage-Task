@@ -85,6 +85,12 @@ background-color: #C0C0C0;
   margin-right: 5px;
 }
 
+.iconarrowuptask,
+.iconarrowdowntask {
+  height: 18px;
+  margin: 5px;
+}
+
 .iconedittask {
   height: 18px;
   margin: 5px;

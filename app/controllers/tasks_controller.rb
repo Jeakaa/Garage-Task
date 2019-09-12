@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   def create
     Task.create(task_params)
 
-    redirect_to projects_path
+    redirect_to root_path
   end
 
   def edit
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      redirect_to projects_path
+      redirect_to root_path
     else
       render :edit
     end
@@ -26,7 +26,19 @@ class TasksController < ApplicationController
   def destroy
     Task.find(params[:id]).destroy
 
-    redirect_to projects_path
+    redirect_to root_path
+  end
+
+  def up
+    Task.find(params[:id]).move_up
+
+    redirect_to root_path
+  end
+
+  def down
+    Task.find(params[:id]).move_down
+
+    redirect_to root_path
   end
 
   private
