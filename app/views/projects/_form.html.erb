@@ -1,17 +1,16 @@
 <div class="projectform">
-  <div class="projectformname">Name:
-  </div>
+  <div class="projectformname">Name:</div>
   <div class="projectformfieldname">
-  <%= f.text_field :name %>
+    <%= f.text_field :name %>
   </div>
   <div class="projectformfieldname2">
-    <p><%= f.submit "Ok" %></p>
+    <p><%= f.submit 'Ok' %></p>
   </div>
 </div>
 <% if @project.errors.any? %>
-<ul>
-  <% @project.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @project.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
 <% end %>

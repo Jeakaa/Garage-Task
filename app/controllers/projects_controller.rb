@@ -11,37 +11,30 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     
     if @project.save
-      redirect_to action: :index
+      redirect_to projects_path
     else
       render :new
     end
   end
 
   def edit
-    @project = Project.find_by_id!(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render :index
+    @project = Project.find(params[:id])
   end
 
   def update
-    @project = Project.find_by_id!(params[:id])
-    @project.attributes = params[:project]
-    @project.save!
+    @project = Project.find(params[:id])
 
-    redirect_to action: :index
-  rescue ActiveRecord::RecordNotFound
-    render :index
-  rescue ActiveRecord::RecordInvalid
-    render :edit
+    if @project.update(project_params)
+      redirect_to projects_path
+    else
+      render :edit
+    end
   end
 
   def destroy
-    @project = Project.find_by_id!(params[:id])
-    @project.destroy
+    Project.find(params[:id]).destroy
 
-    redirect_to action: :index
-  rescue ActiveRecord::RecordNotFound
-    render action: :index
+    redirect_to projects_path
   end
 
   private

@@ -4,31 +4,29 @@ class TasksController < ApplicationController
   end
 
   def create
-    Task.create({ status: 0 }.merge(task_params))
-    redirect_to controller: :projects, action: :index
+    Task.create(task_params)
+
+    redirect_to projects_path
   end
 
   def edit
-    @task = Task.find_by_id!(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def update
-    @task = Task.find_by_id!(params[:id])
+    @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      redirect_to controller: :projects, action: :index
+      redirect_to projects_path
     else
       render :edit
     end
   end
 
   def destroy
-    @task = Task.find_by_id!(params[:id])
-    @task.destroy
+    Task.find(params[:id]).destroy
 
-    redirect_to controller: :projects, action: :index
-  rescue ActiveRecord::RecordNotFound
-    redirect_to controller: :projects, action: :index
+    redirect_to projects_path
   end
 
   private

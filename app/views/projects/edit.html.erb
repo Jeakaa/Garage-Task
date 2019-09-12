@@ -1,6 +1,6 @@
 <h1>Change Project</h1>
 <div class="elementform">
-<% form_for :project, :url => {:action => :update}, :html => {:method => :put} do |f| %>
-  <%= render :partial => 'projects/form', :locals => {:f => f} %>
-<% end %>
+  <%= form_for :project, url: { action: :update }, html: { method: :put } do |f| %>
+    <%= render partial: 'projects/form', locals: { f: f } %>
+  <% end %>
 </div>

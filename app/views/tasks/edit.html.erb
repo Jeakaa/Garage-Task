@@ -1,7 +1,7 @@
 <h2>Edit Task</h2>
 
 <div class="elementform">
-  <%= form_for :task, :url => {:action => :update}, :html => {:method => :put} do |f| %>
+  <%= form_for :task, url: { action: :update }, html: { method: :put } do |f| %>
     <div class="projectform">
       <div class="projectformname">Name:</div>
         <div class="projectformfieldname">
@@ -9,7 +9,7 @@
         </div>
 
         <div class="projectformfieldname2">
-          <p><%= f.submit "Ok" %></p>
+          <p><%= f.submit 'Ok' %></p>
         </div>
 
       </div>
